@@ -23,7 +23,7 @@ public class EmployeeController {
 	public String listEmployees(Model theModel) {
 		List<Employee> employeeList = employeeService.findAll();
 		theModel.addAttribute("employees", employeeList);
-		return "list-employees";
+		return "employees/list-employees";
 	}
 
 	@GetMapping("/showFormForAdd")
