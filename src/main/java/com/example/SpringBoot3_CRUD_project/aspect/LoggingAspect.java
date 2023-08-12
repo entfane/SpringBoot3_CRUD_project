@@ -1,9 +1,7 @@
 package com.example.SpringBoot3_CRUD_project.aspect;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
 import java.util.logging.Logger;
@@ -34,6 +32,16 @@ public class LoggingAspect {
         for (Object arg : args) {
             logger.info("===>> argument: " + arg);
         }
+    }
+
+    @AfterReturning(
+            pointcut = "forAppFlow()",
+            returning = "result"
+    )
+    public void afterReturning(JoinPoint joinPoint, Object result) {
+        String method = joinPoint.getSignature().toShortString();
+        logger.info("===>> in @AfterReturning: from method: " + method);
+        logger.info("===>> result: " + result);
     }
 
 }
