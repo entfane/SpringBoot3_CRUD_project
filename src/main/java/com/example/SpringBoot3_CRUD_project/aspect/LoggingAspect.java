@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 @Component
 public class LoggingAspect {
 
-    private Logger logger = Logger.getLogger(getClass().getName());
+    private final Logger logger = Logger.getLogger(getClass().getName());
 
     @Pointcut("execution(* com.example.SpringBoot3_CRUD_project.controller.*.*(..))")
     private void forControllerPackage() {}
@@ -24,12 +24,16 @@ public class LoggingAspect {
     private void forDaoPackage() {}
 
     @Pointcut("forControllerPackage() || forServicePackage() || forDaoPackage()")
-    private void forAppFlow() {};
+    private void forAppFlow() {}
 
     @Before("forAppFlow()")
     public void before(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().toShortString();
         logger.info("===>> in @Before: calling method: " + method);
+        Object[] args = joinPoint.getArgs();
+        for (Object arg : args) {
+            logger.info("===>> argument: " + arg);
+        }
     }
 
 }
